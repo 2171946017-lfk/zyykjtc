@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>产品电子图册</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .category { margin-bottom: 40px; }
+        .category h2 { border-left: 4px solid #0366d6; padding-left: 12px; margin: 24px 0; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .gallery-item { break-inside: avoid; }
+        .gallery-item img { width: 100%; height: auto; border-radius: 8px; transition: transform 0.3s; }
+        .gallery-item img:hover { transform: scale(1.02); }
+        .caption { padding: 12px 0; color: #555; font-size: 14px; line-height: 1.5; }
+        @media (max-width: 768px) {
+            .gallery { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>产品电子图册</h1>
+        
+        <div class="category">
+            <h2>淋浴过滤器系列</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://cdn.jsdelivr.net/gh/用户名/仓库名/路径/产品图1.jpg" 
+                         loading="lazy" 
+                         alt="淋浴过滤器安装效果">
+                    <div class="caption">
+                        <strong>型号：SF-100</strong><br>
+                        安装效果图，适用于标准花洒接口
+                    </div>
+                </div>
+                <!-- 更多图片 -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 图片懒加载
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            images.forEach(img => {
+                imageObserver.observe(img);
+                img.dataset.src = img.src;
+                img.src = '';
+            });
+        });
+    </script>
+</body>
+</html>
